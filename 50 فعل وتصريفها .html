@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصريف 50 فعلًا إنجليزيًا</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Cairo', 'Roboto', sans-serif; /* خطوط مناسبة للعربية والإنجليزية */
+            line-height: 1.6; 
+            background-color: #f0f4f8; /* خلفية زرقاء فاتحة */
+            color: #333; 
+            direction: rtl; /* الاتجاه العام للصفحة عربي */
+        }
+        
+        /* Header */
+        header { 
+            background-color: #007bff; /* لون أزرق */
+            color: white; 
+            padding: 1rem 0; 
+            text-align: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 1.8rem; margin: 0; }
+
+        /* Main Content */
+        main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .info {
+             background-color: #e7f3ff; /* أزرق فاتح */
+             border: 1px solid #cce0ff;
+             padding: 10px 15px;
+             margin-bottom: 1.5rem;
+             border-radius: 5px;
+             font-size: 0.9rem;
+             color: #0056b3; /* أزرق أغمق */
+        }
+
+        /* Verb List Accordion */
+        #verb-list { list-style: none; padding: 0; }
+
+        .verb-item { 
+            background-color: #fff;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden; 
+        }
+
+        .verb-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+         .verb-header:hover {
+             background-color: #f9f9f9;
+         }
+
+        .verb-header h3 { /* Base form of the verb */
+            margin: 0;
+            font-size: 1.2rem;
+            color: #007bff;
+            font-family: 'Roboto', sans-serif; /* Font for English verb */
+            direction: ltr; /* Verb itself is LTR */
+            text-align: left;
+            font-weight: 700;
+        }
+         .verb-header .arrow {
+             font-size: 1.2rem;
+             transition: transform 0.3s ease;
+             color: #aaa;
+             /* Ensure arrow is on the left for LTR header, but RTL page */
+             order: -1; /* Move arrow to the start (left visually) */
+             margin-left: 15px; 
+         }
+         /* Arrow rotation when active */
+         .verb-item.active .verb-header .arrow {
+             transform: rotate(90deg);
+             color: #007bff;
+         }
+
+
+        .verb-conjugations {
+            padding: 0px 20px 15px 20px;
+            max-height: 0; /* Hidden by default */
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out; 
+            background-color: #fafafa; 
+            border-top: 1px solid #eee;
+            direction: ltr; /* Content inside is English */
+            text-align: left;
+        }
+         /* Show content when active */
+         .verb-item.active .verb-conjugations {
+             max-height: 1000px; 
+             padding: 15px 20px 15px 20px;
+         }
+
+        /* Key Forms List */
+        .key-forms {
+             list-style: none;
+             padding: 0;
+             margin-bottom: 15px;
+             font-family: 'Roboto', sans-serif;
+             font-size: 0.95rem;
+        }
+         .key-forms li {
+             margin-bottom: 5px;
+             border-bottom: 1px dotted #eee;
+             padding-bottom: 5px;
+         }
+          .key-forms li:last-child {
+              border-bottom: none;
+          }
+         .key-forms strong {
+             display: inline-block;
+             width: 130px; /* Adjust width as needed */
+             color: #555;
+         }
+         .key-forms span { /* The verb form */
+            color: #0056b3;
+            font-weight: 500;
+         }
+
+        /* Table Styling for Present Simple */
+        .tense-section { margin-bottom: 10px; }
+        .tense-section h4 { 
+            color: #333; 
+            margin-bottom: 10px; 
+            border-bottom: 1px solid #ddd; 
+            padding-bottom: 5px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .conjugation-table {
+            width: 100%;
+            max-width: 350px; /* Limit width */
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            font-family: 'Roboto', sans-serif;
+            margin-top: 5px;
+        }
+
+        .conjugation-table th, .conjugation-table td {
+            border: 1px solid #ddd;
+            padding: 6px 10px;
+            text-align: left; /* English LTR */
+            vertical-align: middle;
+        }
+         .conjugation-table th { /* Pronoun */
+             background-color: #e7f3ff; 
+             font-weight: bold;
+             width: 80px; 
+             color: #333;
+         }
+        .conjugation-table td { /* Conjugated verb */
+             color: #0056b3;
+             font-weight: 500;
+             background-color: #fff;
+         }
+
+        /* Footer */
+        footer { text-align: center; margin-top: 2rem; padding: 1rem; background-color: #e9ecef; color: #6c757d; font-size: 0.9rem; }
+    
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .verb-header h3 { font-size: 1.1rem; }
+             .key-forms strong { width: 110px;}
+            .conjugation-table { font-size: 0.9rem;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>تصريف 50 فعلًا إنجليزيًا شائعًا</h1>
+    </header>
+
+    <main>
+        <div class="info">
+            <strong>ملاحظة:</strong> هذه قائمة تفاعلية تعرض الأشكال الرئيسية لـ <strong>50 فعلًا إنجليزيًا شائعًا</strong> (بما في ذلك الأفعال الشاذة). انقر على الفعل لعرض تفاصيله وتصريفه في زمن المضارع البسيط.
+        </div>
+
+        <div id="verb-list">
+            </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 تصريف الأفعال الإنجليزية.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const verbListContainer = document.getElementById('verb-list');
+
+            // List of 50 common English verbs with their principal parts
+            const verbs = [
+                { base: "be", s_form: "is", past_simple: "was/were", past_participle: "been", ing_form: "being" },
+                { base: "have", s_form: "has", past_simple: "had", past_participle: "had", ing_form: "having" },
+                { base: "do", s_form: "does", past_simple: "did", past_participle: "done", ing_form: "doing" },
+                { base: "say", s_form: "says", past_simple: "said", past_participle: "said", ing_form: "saying" },
+                { base: "go", s_form: "goes", past_simple: "went", past_participle: "gone", ing_form: "going" },
+                { base: "get", s_form: "gets", past_simple: "got", past_participle: "got/gotten", ing_form: "getting" },
+                { base: "make", s_form: "makes", past_simple: "made", past_participle: "made", ing_form: "making" },
+                { base: "know", s_form: "knows", past_simple: "knew", past_participle: "known", ing_form: "knowing" },
+                { base: "think", s_form: "thinks", past_simple: "thought", past_participle: "thought", ing_form: "thinking" },
+                { base: "take", s_form: "takes", past_simple: "took", past_participle: "taken", ing_form: "taking" },
+                { base: "see", s_form: "sees", past_simple: "saw", past_participle: "seen", ing_form: "seeing" },
+                { base: "come", s_form: "comes", past_simple: "came", past_participle: "come", ing_form: "coming" },
+                { base: "want", s_form: "wants", past_simple: "wanted", past_participle: "wanted", ing_form: "wanting" },
+                { base: "look", s_form: "looks", past_simple: "looked", past_participle: "looked", ing_form: "looking" },
+                { base: "use", s_form: "uses", past_simple: "used", past_participle: "used", ing_form: "using" },
+                { base: "find", s_form: "finds", past_simple: "found", past_participle: "found", ing_form: "finding" },
+                { base: "give", s_form: "gives", past_simple: "gave", past_participle: "given", ing_form: "giving" },
+                { base: "tell", s_form: "tells", past_simple: "told", past_participle: "told", ing_form: "telling" },
+                { base: "work", s_form: "works", past_simple: "worked", past_participle: "worked", ing_form: "working" },
+                { base: "call", s_form: "calls", past_simple: "called", past_participle: "called", ing_form: "calling" },
+                { base: "try", s_form: "tries", past_simple: "tried", past_participle: "tried", ing_form: "trying" },
+                { base: "ask", s_form: "asks", past_simple: "asked", past_participle: "asked", ing_form: "asking" },
+                { base: "need", s_form: "needs", past_simple: "needed", past_participle: "needed", ing_form: "needing" },
+                { base: "feel", s_form: "feels", past_simple: "felt", past_participle: "felt", ing_form: "feeling" },
+                { base: "become", s_form: "becomes", past_simple: "became", past_participle: "become", ing_form: "becoming" },
+                { base: "leave", s_form: "leaves", past_simple: "left", past_participle: "left", ing_form: "leaving" },
+                { base: "put", s_form: "puts", past_simple: "put", past_participle: "put", ing_form: "putting" },
+                { base: "mean", s_form: "means", past_simple: "meant", past_participle: "meant", ing_form: "meaning" },
+                { base: "keep", s_form: "keeps", past_simple: "kept", past_participle: "kept", ing_form: "keeping" },
+                { base: "let", s_form: "lets", past_simple: "let", past_participle: "let", ing_form: "letting" },
+                { base: "begin", s_form: "begins", past_simple: "began", past_participle: "begun", ing_form: "beginning" },
+                { base: "seem", s_form: "seems", past_simple: "seemed", past_participle: "seemed", ing_form: "seeming" },
+                { base: "help", s_form: "helps", past_simple: "helped", past_participle: "helped", ing_form: "helping" },
+                { base: "talk", s_form: "talks", past_simple: "talked", past_participle: "talked", ing_form: "talking" },
+                { base: "turn", s_form: "turns", past_simple: "turned", past_participle: "turned", ing_form: "turning" },
+                { base: "start", s_form: "starts", past_simple: "started", past_participle: "started", ing_form: "starting" },
+                { base: "show", s_form: "shows", past_simple: "showed", past_participle: "shown/showed", ing_form: "showing" },
+                { base: "hear", s_form: "hears", past_simple: "heard", past_participle: "heard", ing_form: "hearing" },
+                { base: "play", s_form: "plays", past_simple: "played", past_participle: "played", ing_form: "playing" },
+                { base: "run", s_form: "runs", past_simple: "ran", past_participle: "run", ing_form: "running" },
+                { base: "move", s_form: "moves", past_simple: "moved", past_participle: "moved", ing_form: "moving" },
+                { base: "like", s_form: "likes", past_simple: "liked", past_participle: "liked", ing_form: "liking" },
+                { base: "live", s_form: "lives", past_simple: "lived", past_participle: "lived", ing_form: "living" },
+                { base: "believe", s_form: "believes", past_simple: "believed", past_participle: "believed", ing_form: "believing" },
+                { base: "hold", s_form: "holds", past_simple: "held", past_participle: "held", ing_form: "holding" },
+                { base: "bring", s_form: "brings", past_simple: "brought", past_participle: "brought", ing_form: "bringing" },
+                { base: "write", s_form: "writes", past_simple: "wrote", past_participle: "written", ing_form: "writing" },
+                { base: "sit", s_form: "sits", past_simple: "sat", past_participle: "sat", ing_form: "sitting" },
+                { base: "stand", s_form: "stands", past_simple: "stood", past_participle: "stood", ing_form: "standing" },
+                { base: "lose", s_form: "loses", past_simple: "lost", past_participle: "lost", ing_form: "losing" }
+            ];
+
+            const pronouns = ["I", "You", "He/She/It", "We", "They"];
+
+            // --- Create the interactive verb list ---
+            function createVerbList() {
+                if (!verbListContainer) return;
+                verbListContainer.innerHTML = ''; // Clear list
+
+                verbs.forEach(verb => {
+                    const verbItem = document.createElement('div');
+                    verbItem.classList.add('verb-item');
+
+                    // 1. Header (Clickable) - Shows base form
+                    const header = document.createElement('div');
+                    header.classList.add('verb-header');
+                    header.innerHTML = `<span class="arrow">▶</span><h3>${verb.base}</h3>`; // Arrow first visually due to flex order
+
+                    // 2. Conjugations Content (Hidden initially)
+                    const conjugationsDiv = document.createElement('div');
+                    conjugationsDiv.classList.add('verb-conjugations');
+
+                    // 2a. List of Key Forms
+                    const keyFormsList = document.createElement('ul');
+                    keyFormsList.classList.add('key-forms');
+                    keyFormsList.innerHTML = `
+                        <li><strong>Base Form:</strong> <span>${verb.base}</span></li>
+                        <li><strong>-s Form:</strong> <span>${verb.s_form}</span></li>
+                        <li><strong>Past Simple:</strong> <span>${verb.past_simple}</span></li>
+                        <li><strong>Past Participle:</strong> <span>${verb.past_participle}</span></li>
+                        <li><strong>-ing Form:</strong> <span>${verb.ing_form}</span></li>
+                    `;
+                    conjugationsDiv.appendChild(keyFormsList);
+
+                    // 2b. Present Simple Table
+                    const tenseSection = document.createElement('div');
+                    tenseSection.classList.add('tense-section');
+                    tenseSection.innerHTML = `<h4>Present Simple Tense</h4>`; // Title for the table
+
+                    const table = document.createElement('table');
+                    table.classList.add('conjugation-table');
+                    const tbody = document.createElement('tbody');
+
+                    pronouns.forEach((pronoun) => {
+                        const tr = document.createElement('tr');
+                        const th = document.createElement('th');
+                        th.textContent = pronoun;
+                        
+                        const td = document.createElement('td');
+                        // Use -s form only for He/She/It, otherwise use base form
+                        td.textContent = (pronoun === "He/She/It") ? verb.s_form : verb.base;
+                        // Special case for 'be' verb
+                        if (verb.base === 'be') {
+                            if (pronoun === 'I') td.textContent = 'am';
+                            else if (pronoun === 'You' || pronoun === 'We' || pronoun === 'They') td.textContent = 'are';
+                            else if (pronoun === 'He/She/It') td.textContent = 'is';
+                        }
+
+                        tr.appendChild(th);
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                    });
+
+                    table.appendChild(tbody);
+                    tenseSection.appendChild(table);
+                    conjugationsDiv.appendChild(tenseSection);
+
+                    // Append header and content to the item
+                    verbItem.appendChild(header);
+                    verbItem.appendChild(conjugationsDiv);
+                    verbListContainer.appendChild(verbItem);
+
+                    // --- Add Click Listener for Accordion ---
+                    header.addEventListener('click', () => {
+                        verbItem.classList.toggle('active');
+                    });
+                });
+            }
+
+            createVerbList(); // Generate the list on page load
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
